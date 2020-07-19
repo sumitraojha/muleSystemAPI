@@ -1,0 +1,32 @@
+<claim>
+    <findClaimsByClaimantIDResponse xmlns="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/pcintegration/MuleClaimSearchAPI">
+        <return>
+            <Entry>
+                <pogo:ClaimNumber xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">000-00-000077</pogo:ClaimNumber>
+                <pogo:FraudIndicator xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">false</pogo:FraudIndicator>
+                <pogo:LitigationIndicator xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">false</pogo:LitigationIndicator>
+                <pogo:LossDate xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">2020-05-13T00:01:00+00:00</pogo:LossDate>
+                <pogo:PolicyNumber xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">A1342345432</pogo:PolicyNumber>
+                <pogo:PolicyTypeName xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">Personal Auto</pogo:PolicyTypeName>
+                <pogo:RemainingReserves xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">0.00</pogo:RemainingReserves>
+                <pogo:RemainingReservesCurrency xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">usd</pogo:RemainingReservesCurrency>
+                <pogo:Status xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">Open</pogo:Status>
+                <pogo:TotalIncurred xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">0.00</pogo:TotalIncurred>
+                <pogo:TotalIncurredCurrency xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">usd</pogo:TotalIncurredCurrency>
+            </Entry>
+			<Entry>
+                <pogo:ClaimNumber xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">000-00-000077</pogo:ClaimNumber>
+                <pogo:FraudIndicator xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">false</pogo:FraudIndicator>
+                <pogo:LitigationIndicator xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">false</pogo:LitigationIndicator>
+                <pogo:LossDate xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">2020-05-13T00:01:00+00:00</pogo:LossDate>
+                <pogo:PolicyNumber xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">A1342345432</pogo:PolicyNumber>
+                <pogo:PolicyTypeName xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">Personal Auto</pogo:PolicyTypeName>
+                <pogo:RemainingReserves xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">0.00</pogo:RemainingReserves>
+                <pogo:RemainingReservesCurrency xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">usd</pogo:RemainingReservesCurrency>
+                <pogo:Status xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">Open</pogo:Status>
+                <pogo:TotalIncurred xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">0.00</pogo:TotalIncurred>
+                <pogo:TotalIncurredCurrency xmlns:pogo="http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim">usd</pogo:TotalIncurredCurrency>
+            </Entry>
+        </return>
+    </findClaimsByClaimantIDResponse>
+</claim>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	
+	<http:request-config name="basic-auth"> 
+		<http:request-connection host="www.someplace.com" port="8182" protocol="HTTP"> 
+			<http:authentication> <http:basic-authentication username="su" password="gw"/> 
+			</http:authentication> 
+		</http:request-connection> 
+	</http:request-config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="2246d2ed-b126-4da8-bfe1-fc3ff67f6d45" >
+		<wsc:connection wsdlLocation="http://139.59.60.164:8480/cc/ws/gw/webservice/cc/cc900/mule/MuleClaimSearchAPI?wsdl" service="MuleClaimSearchAPI" port="MuleClaimSearchAPISoap11Port" address="http://139.59.60.164:8480/cc/ws/gw/webservice/cc/cc900/mule/MuleClaimSearchAPI/soap11" >
+			<wsc:custom-transport-configuration> 
+				<wsc:http-transport-configuration requesterConfig="basic-auth"/> 
+			</wsc:custom-transport-configuration>
+		</wsc:connection>
+	</wsc:config>
+	<flow name="GWClaimResponseFlow" doc:id="fca61292-0d64-4191-95bf-82d6f24b3e64" >
+		<set-variable value="#[attributes.queryParams.customerID]" doc:name="Set Variable" doc:id="3030d3aa-3369-4b98-8e1d-08041b1bfa87" variableName="customerID"/>
+		<ee:transform doc:name="Transform Message" doc:id="f498f014-00d3-4165-8145-a0c917270073" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://guidewire.com/cc/ws/gw/webservice/cc/cc900/pcintegration/MuleClaimSearchAPI
+---
+{
+	ns0#findClaimsByClaimantID: {
+		ns0#contactPublicId: vars.customerID
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="ee5b1612-cd0e-4fdb-aa72-333325a31aa8" config-ref="Web_Service_Consumer_Config" operation="findClaimsByClaimantID"/>
+		<ee:transform doc:name="Transform Message" doc:id="4f3edbb8-bce4-46cd-a3d1-f9675c63fc37" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	claim : payload.body
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="26a457ad-9258-414c-9514-f81de0fa08e0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://guidewire.com/cc/ws/gw/webservice/cc/cc900/pcintegration/MuleClaimSearchAPI
+ns ns01 http://guidewire.com/cc/ws/gw/webservice/cc/cc900/mule/MuleClaim
+---
+{
+	ClaimGW: payload.claim.ns0#findClaimsByClaimantIDResponse.ns0#return.*ns0#Entry map ( entry , indexOfEntry ) -> {
+		ClaimNumber: entry.ns01#ClaimNumber default "",
+		FraudIndicator: entry.ns01#FraudIndicator default "",
+		LitigationIndicator: entry.ns01#LitigationIndicator default "",
+		LossDate: entry.ns01#LossDate as String default "",
+		PolicyNumber: entry.ns01#PolicyNumber default "",
+		PolicyTypeName: entry.ns01#PolicyTypeName default "",
+		RemainingReserves: entry.ns01#RemainingReserves as String default "",
+		RemainingReservesCurrency: entry.ns01#RemainingReservesCurrency default "",
+		Status: entry.ns01#Status default "",
+		TotalIncurred: entry.ns01#TotalIncurred as String default "",
+		TotalIncurredCurrency: entry.ns01#TotalIncurredCurrency default ""
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<!--  ee:transform doc:name="Transform Message" doc:id="1ff00f8f-f436-4293-b17e-cada4f5d92c2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+-&#45;&#45;
+{
+	claim: payload.claim.findClaimsByClaimantIDResponse.return.Entry
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform-->
+	</flow>
+</mule>

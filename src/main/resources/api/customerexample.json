@@ -1,0 +1,27 @@
+  [	{
+        "CustomerID": "BU79786",
+        "first_name": "James",
+        "last_name": "Butt",
+        "DOB": "2/22/1981",
+		    "company_name": "Benton  John B Jr",
+		    "address": "6649 N Blue Gum St",
+		    "city": "New Orleans" ,
+		    "county": "Orleans",
+		    "state": "LA",
+		    "zip": "70116" ,
+		    "phone1": "504-621-8927"
+		},
+	  {
+        "CustomerID": "BU79786",
+        "first_name": "James",
+        "last_name": "Butt",
+        "DOB": "2/22/1981",
+		    "company_name": "Benton  John B Jr",
+		    "address": "6649 N Blue Gum St",
+		    "city": "New Orleans" ,
+		    "county": "Orleans",
+		    "state": "LA",
+		    "zip": "70116" ,
+        "phone1": "504-621-8927"
+    }
+]	  

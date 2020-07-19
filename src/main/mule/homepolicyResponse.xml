@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:mongo="http://www.mulesoft.org/schema/mule/mongo"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mongo http://www.mulesoft.org/schema/mule/mongo/current/mule-mongo.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<mongo:config name="MongoDB_Config" doc:name="MongoDB Config" doc:id="117a7d30-f168-4a05-83de-5d06f1d081a0" >
+		<mongo:connection-string-connection connectionString="mongodb+srv://sumitraojha:sumitra@cluster0-tkx83.mongodb.net/HomePolicy" />
+	</mongo:config>
+	<flow name="homepolicyResponseFlow" doc:id="9068464c-9f0e-4378-9335-4b898937defc" >
+		<set-variable value="#[attributes.queryParams.customerID]" doc:name="CustomerID" doc:id="e1df430e-c20d-45e9-a225-7bf90c84d79f" variableName="customerID"/>
+		<ee:transform doc:name="Transform Message" doc:id="2d5e0d88-9d3a-4969-8d90-a73bec37eac5">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"CustomerID":vars.customerID
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<mongo:find-documents doc:name="Find Homepolicy documents" doc:id="eae71085-5701-48bf-8ab5-5e91c3749649" config-ref="MongoDB_Config" collectionName="HomePolicy"/>
+		<ee:transform doc:name="Transform Message" doc:id="34ece67e-f4f5-472a-9a87-c1a1d38148a0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	homepolicy: payload map ( payload01 , indexOfPayload01 ) -> {
+		CustomerID: payload01.CustomerID,
+		"Policy Number": payload01."Policy Number",
+		QUOTE_DATE: payload01.QUOTE_DATE,
+		"Effective Date": payload01."Effective Date",
+		CLAIM3YEARS: payload01.CLAIM3YEARS,
+		LAST_ANNUAL_PREMIUM_GROSS: payload01.LAST_ANNUAL_PREMIUM_GROSS,
+		PAYMENT_METHOD: payload01.PAYMENT_METHOD,
+		POLICY_STATUS: payload01.POLICY_STATUS,
+		AD_BUILDINGS: payload01.AD_BUILDINGS,
+		RISK_RATED_AREA_B: payload01.RISK_RATED_AREA_B,
+		LIMIT_BUILDINGS: payload01.LIMIT_BUILDINGS,
+		NCD_GRANTED_YEARS_B: payload01.NCD_GRANTED_YEARS_B,
+		AD_CONTENTS: payload01.AD_CONTENTS,
+		RISK_RATED_AREA_C: payload01.RISK_RATED_AREA_C,
+		LIMIT_CONTENTS: payload01.LIMIT_CONTENTS,
+		NCD_GRANTED_YEARS_C: payload01.NCD_GRANTED_YEARS_C,
+		CONTENTS_COVER: payload01.CONTENTS_COVER,
+		BUILDINGS_COVER: payload01.BUILDINGS_COVER,
+		SPEC_LIMIT: payload01.SPEC_LIMIT,
+		SPEC_ITEM_PREMIUM: payload01.SPEC_ITEM_PREMIUM,
+		UNSPEC_HRP_PREMIUM: payload01.UNSPEC_HRP_PREMIUM,
+		APPRMENT_ALARM: payload01.APPRMENT_ALARM,
+		APPRMENT_LOCKS: payload01.APPRMENT_LOCKS,
+		BEDROOMS: payload01.BEDROOMS,
+		ROOF_CONSTRUCTION_CODE: payload01.ROOF_CONSTRUCTION_CODE,
+		WALL_CONSTRUCTION_CODE: payload01.WALL_CONSTRUCTION_CODE,
+		FLOOD_RISK_ZONE: payload01.FLOOD_RISK_ZONE,
+		NEIGH_WATCH: payload01.NEIGH_WATCH,
+		OWNERSHIP_TYPE_CODE: payload01.OWNERSHIP_TYPE_CODE,
+		PAYING_GUESTS: payload01.PAYING_GUESTS,
+		PROP_TYPE_CODE: payload01.PROP_TYPE_CODE,
+		SAFE_INSTALLED: payload01.SAFE_INSTALLED,
+		SEC_DISC_REQ: payload01.SEC_DISC_REQ,
+		SUBSIDENCE: payload01.SUBSIDENCE,
+		YEARBUILT: payload01.YEARBUILT
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

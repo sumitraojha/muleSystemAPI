@@ -1,0 +1,27 @@
+{"AutoPolicyGW":
+	[{
+		"AccountName"	: "Poli P",
+		"AccountNumber" : 2954945418,
+		"Address"	: "200 main Marg, J L, CAL, CA 43241",
+		"AddressType" : "home",
+		"IssueDate" : "2020-07-08",
+		"Issued" : true,
+		"PNIPublicID" : "pc:154",
+		"PolicyNumber" : "1485800458",
+		"PrimaryNamedInsured" : "Kuntal Paul",
+		"Product": "Personal Auto",
+		"Underwriter" : "Bruce Baker"
+	},
+	{	"AccountName"	: "Poli P",
+		"AccountNumber" : 2954945418,
+		"Address"	: "200 main Marg, J L, CAL, CA 43241",
+		"AddressType" : "home",
+		"IssueDate" : "2020-07-08",
+		"Issued" : true,
+		"PNIPublicID" : "pc:154",
+		"PolicyNumber" : "9555239617",
+		"PrimaryNamedInsured" : "Kuntal Paul",
+		"Product": "Personal Auto",
+		"Underwriter" : "Christine Craft"
+	}]
+}	

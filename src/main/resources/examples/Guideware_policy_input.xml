@@ -1,0 +1,32 @@
+<policy>
+    <getContactInfoResponse xmlns="http://guidewire.com/pc/ws/gw/webservice/pc/pc800/policysearch/PolicySearchAPI">
+        <return>
+            <Entry>
+                <pogo:AccountName xmlns:pogo="http://example.com/search">Poli P</pogo:AccountName>
+                <pogo:AccountNumber xmlns:pogo="http://example.com/search">2954945418</pogo:AccountNumber>
+                <pogo:Address xmlns:pogo="http://example.com/search">200 main Marg, J L, CAL, CA 43241</pogo:Address>
+                <pogo:AddressType xmlns:pogo="http://example.com/search">home</pogo:AddressType>
+                <pogo:IssueDate xmlns:pogo="http://example.com/search">2020-07-08</pogo:IssueDate>
+                <pogo:Issued xmlns:pogo="http://example.com/search">true</pogo:Issued>
+                <pogo:PNIPublicID xmlns:pogo="http://example.com/search">pc:154</pogo:PNIPublicID>
+                <pogo:PolicyNumber xmlns:pogo="http://example.com/search">1485800458</pogo:PolicyNumber>
+                <pogo:PrimaryNamedInsured xmlns:pogo="http://example.com/search">Kuntal Paul</pogo:PrimaryNamedInsured>
+                <pogo:Product xmlns:pogo="http://example.com/search">Personal Auto</pogo:Product>
+                <pogo:Underwriter xmlns:pogo="http://example.com/search">Bruce Baker</pogo:Underwriter>
+            </Entry>
+            <Entry>
+                <pogo:AccountName xmlns:pogo="http://example.com/search">Poli P</pogo:AccountName>
+                <pogo:AccountNumber xmlns:pogo="http://example.com/search">2954945418</pogo:AccountNumber>
+                <pogo:Address xmlns:pogo="http://example.com/search">200 main Marg, J L, CAL, CA 43241</pogo:Address>
+                <pogo:AddressType xmlns:pogo="http://example.com/search">home</pogo:AddressType>
+                <pogo:IssueDate xmlns:pogo="http://example.com/search">2020-07-08</pogo:IssueDate>
+                <pogo:Issued xmlns:pogo="http://example.com/search">true</pogo:Issued>
+                <pogo:PNIPublicID xmlns:pogo="http://example.com/search">pc:154</pogo:PNIPublicID>
+                <pogo:PolicyNumber xmlns:pogo="http://example.com/search">9555239617</pogo:PolicyNumber>
+                <pogo:PrimaryNamedInsured xmlns:pogo="http://example.com/search">Kuntal Paul</pogo:PrimaryNamedInsured>
+                <pogo:Product xmlns:pogo="http://example.com/search">Personal Auto</pogo:Product>
+                <pogo:Underwriter xmlns:pogo="http://example.com/search">Christine Craft</pogo:Underwriter>
+            </Entry>
+        </return>
+    </getContactInfoResponse>
+</policy>

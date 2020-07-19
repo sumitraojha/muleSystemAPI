@@ -1,0 +1,28 @@
+{"policy":[
+{
+       "CustomerID": "AI49188",
+       "Policy ID": "ZZ49347",
+       "Coverage": "Premium",
+       "Effective To Date": "2/19/11",
+	   "Monthly Premium Auto": "108",
+	   "Months Since Last Claim": "18",
+	   "Months Since Policy Inception": "38",
+	   "Number of Open Complaints": "0",
+	   "Policy Type": "Personal Auto",
+	   "Vehicle Class": "Two-Door Car",
+	   "Vehicle Size": "Medsize"
+},
+{
+       "CustomerID": "AI49188",
+       "Policy ID": "ZZ49347",
+       "Coverage": "Premium",
+       "Effective To Date": "2/19/11",
+	   "Monthly Premium Auto": "108",
+	   "Months Since Last Claim": "18",
+	   "Months Since Policy Inception": "38",
+	   "Number of Open Complaints": "0",
+	   "Policy Type": "Personal Auto",
+	   "Vehicle Class": "Two-Door Car",
+	   "Vehicle Size": "Medsize"
+}]
+}

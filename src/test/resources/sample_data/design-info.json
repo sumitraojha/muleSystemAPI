@@ -1,0 +1,13 @@
+{
+  "sampleData": {
+    "b2d52ba6-3d1e-4ce8-92ee-8d59acb87710": {
+      "attributes": "sample_data/httpresponseattributes.dwl"
+    },
+    "34ece67e-f4f5-472a-9a87-c1a1d38148a0": {
+      "payload": "sample_data/json.json"
+    },
+    "26a457ad-9258-414c-9514-f81de0fa08e0": {
+      "vars-customerID": "sample_data/unknown.dwl"
+    }
+  }
+}

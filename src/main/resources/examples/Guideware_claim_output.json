@@ -1,0 +1,28 @@
+{
+  "ClaimGW": [{
+          "ClaimNumber": "000-00-000077",
+          "FraudIndicator": "false",
+          "LitigationIndicator": "false",
+          "LossDate": "2020-05-13T00:01:00+00:00",
+          "PolicyNumber": "A1342345432",
+          "PolicyTypeName": "Personal Auto",
+          "RemainingReserves": "0.00",
+          "RemainingReservesCurrency": "usd",
+          "Status": "Open",
+          "TotalIncurred": "0.00",
+          "TotalIncurredCurrency": "usd"
+        },
+		{
+          "ClaimNumber": "000-00-000077",
+          "FraudIndicator": "false",
+          "LitigationIndicator": "false",
+          "LossDate": "2020-05-13T00:01:00+00:00",
+          "PolicyNumber": "A1342345432",
+          "PolicyTypeName": "Personal Auto",
+          "RemainingReserves": "0.00",
+          "RemainingReservesCurrency": "usd",
+          "Status": "Open",
+          "TotalIncurred": "0.00",
+          "TotalIncurredCurrency": "usd"
+        }]
+}

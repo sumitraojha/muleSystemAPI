@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="autopolicyResponseFlow" doc:id="fdef3b61-6199-4711-8c2b-c9dc28710ee8" >
+		<set-variable value="#[attributes.queryParams.customerID]" doc:name="CustomerID" doc:id="bff43ec4-f0c8-46f4-a120-5a3569e0d874" variableName="customerID" />
+		<set-variable value="#[attributes.queryParams.policytype]" doc:name="Policy Type" doc:id="306acbd3-e097-4fa3-b627-6465f2273f87" variableName="policytype" />
+		<choice doc:name="Choice" doc:id="77690aba-f30c-43de-a11f-c41818e7a3c9" >
+			<when expression="#[vars.customerID !=null and vars.policytype !=null]">
+				<flow-ref doc:name="Flow Reference1" doc:id="14fb30c7-078e-401a-89a0-fc5361d8e1f5" name="policyResponseFlow1"/>
+			</when>
+			<when expression="#[vars.customerID !=null and vars.policytype ==null]">
+				<flow-ref doc:name="Flow Reference2" doc:id="0f28b203-a777-4f42-9a2e-24cd70afd6ae" name="policyResponseFlow2"/>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="b4b752cb-c152-4506-b9a7-871801c3294c" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message : "CustomerID is not provided"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="policyResponseFlow1" doc:id="d09971e4-5686-4d25-9b14-25ff88b1fbd1" >
+		<http:request method="GET" doc:name="Request" doc:id="b9df1be7-c4d2-4242-bf2e-be305aef1d11" url="https://muledemoinsurance.herokuapp.com/webapi/resource/policydetails">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	policytype : vars.policytype,
+	customerID : vars.customerID
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="8878961d-edc4-4ca0-9555-2d78662c7b43" message="the policy detail is: #[payload]"/>
+	</flow>
+	<flow name="policyResponseFlow2" doc:id="0986c95f-7061-4e51-aad0-04de1f05a469" >
+		<http:request method="GET" doc:name="Request" doc:id="f2d78b3a-bd1b-47b0-b33d-acb611272077" url="https://muledemoinsurance.herokuapp.com/webapi/resource/policydetails">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	customerID : vars.customerID
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="604de97f-1917-494d-be32-119adf8dbe4b" message="the policy details are: #[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="bb408300-72cd-4bee-9a39-e1cbdf511ee3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	policy: payload map ( payload01 , indexOfPayload01 ) -> {
+		CustomerID: payload01.CustomerID,
+		"Policy ID": payload01."Policy ID",
+		Coverage: payload01.Coverage,
+		"Effective To Date": payload01."Effective To Date",
+		"Monthly Premium Auto": payload01."Monthly Premium Auto",
+		"Months Since Last Claim": payload01."Months Since Last Claim",
+		"Months Since Policy Inception": payload01."Months Since Policy Inception",
+		"Number of Open Complaints": payload01."Number of Open Complaints",
+		"Policy Type": payload01."Policy Type",
+		"Vehicle Class": payload01."Vehicle Class",
+		"Vehicle Size": payload01."Vehicle Size"
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

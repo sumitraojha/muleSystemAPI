@@ -1,0 +1,32 @@
+<policy>
+    <findPolicyInfoByContactIDResponse xmlns="http://guidewire.com/pc/ws/gw/webservice/pc/pc800/policysearch/PolicySearchAPI">
+        <return>
+            <Entry>
+                <pogo:AccountName xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">Poli P</pogo:AccountName>
+                <pogo:AccountNumber xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">2954945418</pogo:AccountNumber>
+                <pogo:Address xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">200 main Marg, J L, CAL, CA 43241</pogo:Address>
+                <pogo:AddressType xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">home</pogo:AddressType>
+                <pogo:IssueDate xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">2020-07-08</pogo:IssueDate>
+                <pogo:Issued xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">true</pogo:Issued>
+                <pogo:PNIPublicID xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">pc:154</pogo:PNIPublicID>
+                <pogo:PolicyNumber xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">1485800458</pogo:PolicyNumber>
+                <pogo:PrimaryNamedInsured xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">Kuntal Paul</pogo:PrimaryNamedInsured>
+                <pogo:Product xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">Personal Auto</pogo:Product>
+                <pogo:Underwriter xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">Bruce Baker</pogo:Underwriter>
+            </Entry>
+            <Entry>
+                <pogo:AccountName xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">Poli P</pogo:AccountName>
+                <pogo:AccountNumber xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">2954945418</pogo:AccountNumber>
+                <pogo:Address xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">200 main Marg, J L, CAL, CA 43241</pogo:Address>
+                <pogo:AddressType xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">home</pogo:AddressType>
+                <pogo:IssueDate xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">2020-07-08</pogo:IssueDate>
+                <pogo:Issued xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">true</pogo:Issued>
+                <pogo:PNIPublicID xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">pc:154</pogo:PNIPublicID>
+                <pogo:PolicyNumber xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">9555239617</pogo:PolicyNumber>
+                <pogo:PrimaryNamedInsured xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">Kuntal Paul</pogo:PrimaryNamedInsured>
+                <pogo:Product xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">Personal Auto</pogo:Product>
+                <pogo:Underwriter xmlns:pogo="http://example.com/gw/webservice/pc/pc800/policysearch">Christine Craft</pogo:Underwriter>
+            </Entry>
+        </return>
+    </findPolicyInfoByContactIDResponse>
+</policy>

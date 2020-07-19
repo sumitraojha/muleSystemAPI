@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="customerResponseFlow" doc:id="bbc58758-1842-4a1b-8e8c-a2732f1438b8" >
+		<set-variable value="#[attributes.queryParams.fname]" doc:name="FNAME" doc:id="9de8a2e5-2661-4f94-9912-460d1ac2e4a2" variableName="fname" />
+		<set-variable value="#[attributes.queryParams.lname]" doc:name="LNAME" doc:id="d65430d9-fe79-486e-bb55-871dba9f0563" variableName="lname" />
+		<set-variable value="#[attributes.queryParams.dob]" doc:name="DOB" doc:id="82e4b563-d08b-47c5-8bca-974cb87f3f1f" variableName="dob" />
+		<choice doc:name="Choice" doc:id="b6ed5011-6da3-42ec-ad3e-2f81df176bfd" >
+			<when expression="#[vars.fname !=null and vars.lname !=null and vars.dob !=null]">
+				<flow-ref doc:name="Flow Reference1" doc:id="7b51c184-6b9d-4f2a-af1d-e3ff4df6e8bc" name="customerResponseFlow1"/>
+			</when>
+			<when expression="#[vars.fname !=null and vars.lname !=null and vars.dob ==null]">
+				<flow-ref doc:name="Flow Reference2" doc:id="5948985c-0a1e-430c-9a69-5658b4291db8" name="customerResponseFlow2"/>
+			</when>
+			<when expression="#[vars.fname !=null and vars.lname ==null and vars.dob !=null]">
+				<flow-ref doc:name="Flow Reference3" doc:id="194a01d4-42b0-4f30-94fd-ce515cbc91fb" name="customerResponseFlow3"/>
+			</when>
+			<when expression="#[vars.fname ==null and vars.lname !=null and vars.dob !=null]">
+				<flow-ref doc:name="Flow Reference4" doc:id="115f7cd0-8cae-46c4-a438-7b3525d2b116" name="customerResponseFlow4"/>
+			</when>
+			<when expression="#[vars.fname !=null and vars.lname ==null and vars.dob ==null]">
+				<flow-ref doc:name="Flow Reference5" doc:id="cd7c6056-b7bb-4445-9ca8-f893f5e20e79" name="customerResponseFlow5"/>
+			</when>
+			<when expression="#[vars.fname ==null and vars.lname !=null and vars.dob ==null]">
+				<flow-ref doc:name="Flow Reference6" doc:id="8e5594be-024a-431f-a820-4e55fbc46096" name="customerResponseFlow6"/>
+			</when>
+			<when expression="#[vars.fname ==null and vars.lname ==null and vars.dob !=null]">
+				<flow-ref doc:name="Flow Reference7" doc:id="c8da2e56-3153-4d31-983e-1562f33ead8e" name="customerResponseFlow7"/>
+			</when>
+			<when expression="#[vars.fname ==null and vars.lname ==null and vars.dob ==null]">
+				<ee:transform doc:name="Transform Message" doc:id="84f028db-a87c-4f97-ba23-3e223630bae3" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	message: "Enter alteast one queryparams"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</when>
+			<otherwise>
+				<ee:transform doc:name="Transform Message" doc:id="46d60fd0-b53e-48c9-8470-5c057ae26f09" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message:"Enter atleast one query params"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="customerResponseFlow1" doc:id="6e1a9379-f460-471e-8170-4341bd2f5ac9" >
+		<http:request method="GET" doc:name="Request" doc:id="097d0d01-94b1-4664-b275-8db92117ab06" url="https://muledemoinsurance.herokuapp.com/webapi/resource/customerdetails1">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	fname : vars.fname,
+	lname : vars.lname,
+	dob : vars.dob
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="5918e0bb-d2b3-444b-ae18-4f578b28fb25" message="Customers are:#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="bb53e45f-ce4c-4f23-af65-90ecb19fc568" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="customerResponseFlow2" doc:id="d3483803-4c73-48ec-91c1-1eaa1b718c64" >
+		<http:request method="GET" doc:name="Request" doc:id="82bb3561-a4ba-4b44-bb1a-dac6c34339eb" url="https://muledemoinsurance.herokuapp.com/webapi/resource/customerdetails2">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	fname : vars.fname,
+	lname : vars.lname
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="b2a0b7f3-f50f-4baa-8ff5-802c66a33faa" />
+		<ee:transform doc:name="Transform Message" doc:id="1304dade-39d5-44af-8f2b-10b4f3f3c2ea" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="customerResponseFlow3" doc:id="02559026-c1d2-4ba7-a1a7-6068f96001e8" >
+		<http:request method="GET" doc:name="Request" doc:id="758f7ce4-08fa-4079-ae40-a6ac2dca8923" url="https://muledemoinsurance.herokuapp.com/webapi/resource/customerdetails3">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	fname : vars.fname,
+	dob : vars.dob
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="34f8ce85-7123-4c10-a29a-580ddaa095d5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="customerResponseFlow4" doc:id="9db88e74-f02d-49ef-8079-007602a3d443" >
+		<http:request method="GET" doc:name="Request" doc:id="b1960f25-34a3-4d36-b883-52eb9b0d6198" url="https://muledemoinsurance.herokuapp.com/webapi/resource/customerdetails4">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	lname : vars.lname,
+	dob : vars.dob
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="a17d62da-6d86-4f64-929b-a9f610584fd1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="customerResponseFlow5" doc:id="990a2dc3-af6d-456d-8507-b007ed360385" >
+		<http:request method="GET" doc:name="Request" doc:id="64953b07-aa6f-4fcd-89c0-d8a9fb4eb1bc" url="https://muledemoinsurance.herokuapp.com/webapi/resource/customerdetails5">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	fname : vars.fname
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="6f48a2f8-abe5-47fe-88a1-897e27bdce14" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="5ba9a8e5-dfa2-4da9-8cf4-174debc9fd10" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="customerResponseFlow6" doc:id="fb60c07d-bfa1-4200-962a-9c985bc363bb" >
+		<http:request method="GET" doc:name="Request" doc:id="2f71de5c-d81b-4e0c-ae1e-d9e26ea4697e" url="https://muledemoinsurance.herokuapp.com/webapi/resource/customerdetails6">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	lname : vars.lname
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="962c1f79-000b-4443-b82b-5851c78a561f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="customerResponseFlow7" doc:id="a72420e6-923d-4c28-ab9b-b4bdd6640ca7" >
+		<http:request method="GET" doc:name="Request" doc:id="a35edf87-84b8-4d24-9db8-86f7bc4d5534" url="https://muledemoinsurance.herokuapp.com/webapi/resource/customerdetails7">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	dob : vars.dob
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="346bb1da-7435-42d1-bd81-7c754e638eef" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

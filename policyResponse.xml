@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="policyResponseFlow" doc:id="d09971e4-5686-4d25-9b14-25ff88b1fbd1" >
+		<set-variable value="#[attributes.queryParams.customerID]" doc:name="CustomerID" doc:id="bff43ec4-f0c8-46f4-a120-5a3569e0d874" variableName="customerID"/>
+		<set-variable value="#[attributes.queryParams.policytype]" doc:name="Policy Type" doc:id="306acbd3-e097-4fa3-b627-6465f2273f87" variableName="policytype"/>
+		<http:request method="GET" doc:name="Request" doc:id="b9df1be7-c4d2-4242-bf2e-be305aef1d11" url="http://localhost:8080/muleInsuranceDemo/insurance/resource/policydetails">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	policytype : vars.policytype,
+	customerID : vars.customerID
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="8878961d-edc4-4ca0-9555-2d78662c7b43" message="the policy detail is: #[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="e85ca3e5-5a71-449e-982e-afd6dce89eec" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

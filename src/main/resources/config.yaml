@@ -1,0 +1,4 @@
+http:
+  path: "/service"
+  port: "10000"
+  host: "my-api.cloudhub.io"

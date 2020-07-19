@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	
+	<http:request-config name="basic-auth1"> 
+		<http:request-connection host="www.someplace.com" port="8182"> 
+			<http:authentication> <http:basic-authentication username="su" password="gw"/> 
+			</http:authentication> 
+		</http:request-connection> 
+	</http:request-config>
+	<wsc:config name="Web_Service_Consumer_Config1" doc:name="Web Service Consumer Config" doc:id="761749c4-0007-4c30-80b4-f44f208255ea" >
+		<wsc:connection wsdlLocation="D:\MULE_API_Insurance_Demo Pckage\Backend record files\policy center files\PolicySearchAPI.wsdl" service="PolicySearchAPI" port="PolicySearchAPISoap11Port" address="http://3003afba09e2.in.ngrok.io/pc/ws/gw/webservice/pc/pc800/policysearch/PolicySearchAPI/soap11" >
+			<wsc:custom-transport-configuration> 
+				<wsc:http-transport-configuration requesterConfig="basic-auth1"/> 
+			</wsc:custom-transport-configuration>
+		</wsc:connection>
+	</wsc:config>
+	<flow name="GWPolicyResponseFlow" doc:id="2c0c7da6-39fe-4d97-bb29-c961ed3349f3" >
+		<set-variable value="#[attributes.queryParams.customerID]" doc:name="Set Variable" doc:id="f47b4cd6-ccb3-4d35-9f7e-e3a584a810a0" variableName="customerID"/>
+		<ee:transform doc:name="Transform Message" doc:id="490ddd87-2c35-47ba-87ee-b9e7a6953611" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://guidewire.com/pc/ws/gw/webservice/pc/pc800/policysearch/PolicySearchAPI
+---
+{
+	ns0#findPolicyInfoByContactID: {
+		ns0#publicId: vars.customerID
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume operation="findPolicyInfoByContactID" doc:name="Consume" doc:id="e25437ff-6d36-438c-a465-71d43a61e872" config-ref="Web_Service_Consumer_Config1"/>
+		<ee:transform doc:name="Transform Message" doc:id="ea9b871d-7c8e-471d-8934-0ae04d9f2679" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	policy : payload.body
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="ab7def71-4857-4f7e-9d24-fb0ed9335a2d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://guidewire.com/pc/ws/gw/webservice/pc/pc800/policysearch/PolicySearchAPI
+ns ns01 http://example.com/gw/webservice/pc/pc800/policysearch
+---
+{
+	AutopolicyGW: payload.policy.ns0#findPolicyInfoByContactIDResponse.ns0#return.*ns0#Entry map ( entry , indexOfEntry ) -> {
+		AccountName: entry.ns01#AccountName default "",
+		AccountNumber: entry.ns01#AccountNumber as String default "",
+		Address: entry.ns01#Address default "",
+		AddressType: entry.ns01#AddressType default "",
+		IssueDate: entry.ns01#IssueDate as String default "",
+		Issued: entry.ns01#Issued default "",
+		PNIPublicID: entry.ns01#PNIPublicID default "",
+		PolicyNumber: entry.ns01#PolicyNumber as String default "",
+		PrimaryNamedInsured: entry.ns01#PrimaryNamedInsured default "",
+		Product: entry.ns01#Product default "",
+		Underwriter: entry.ns01#Underwriter default ""
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

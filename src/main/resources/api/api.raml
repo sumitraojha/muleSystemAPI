@@ -1,0 +1,106 @@
+#%RAML 1.0
+title: muleInsurance-system-api
+
+version: 1.0.0
+
+traits:
+  client-id:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+       
+    responses:
+      401:
+        description: Unauthorized, The client_id or client_secret are not valid or the client does not have access.
+      404:
+        description: No Record found.
+      429:
+        description: The client used all of it's request quota for the current period.
+      500:
+        description: Server error ocurred
+      503:
+        description: Contracts Information Unreachable.
+/customer:
+  get:
+      description: gets a list of customer details
+      queryParameters:
+        fname:
+          description: first name
+          example: Sumitra
+          required: false
+          type: string
+        lname:
+          description: Last name
+          example: Ojha
+          required: false
+          type: string
+        dob:
+          description: Date of Birth
+          example: 1/2/2003
+          required: false
+          type: string            
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include customerexample.json
+/autopolicy:
+  get:
+      description: gets the Auto policy detail of a customer
+      queryParameters:
+        customerID:
+          description: CustomerID
+          example: BU79786
+          required: true
+          type: string
+      
+      responses:
+        200: 
+          body:
+            application/json:
+              example: !include policyexample.json
+/homepolicy:
+  get:
+      description: gets the Home policy detail of a customer
+      queryParameters:
+        customerID:
+          description: CustomerID
+          example: BU79786
+          required: true
+          type: string
+        
+      responses:
+        200: 
+          body:
+            application/json:
+          
+/getPolicyGW:
+   get:
+      description: gets the Auto policy detail of a customer from Guideware Policy Center
+      queryParameters:
+        customerID:
+          description: CustomerID
+          example: BU79786
+          required: true
+          type: string
+        
+      responses:
+        200: 
+          body:
+            application/json:        
+/getClaimGW:
+   get:
+      description: gets the Claim detail of a customer from Guideware Claim Center
+      queryParameters:
+        customerID:
+          description: CustomerID
+          example: BU79786
+          required: true
+          type: string
+        
+      responses:
+        200: 
+          body:
+            application/json:                    
